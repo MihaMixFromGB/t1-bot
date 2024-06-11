@@ -1,7 +1,7 @@
 export function test({ template, message, exact = false }) {
   if (exact) return template === message;
 
-  const regex = new RegExp(keywords, "gi");
+  const regex = new RegExp(template, "gi");
   return regex.test(message);
 }
 
@@ -14,7 +14,7 @@ export function getDepositFromMessage({ templates, message }) {
 }
 
 function getDepositFromTemplate({ template, message }) {
-  const regex = new RegExp(`(${template})|([\W\S]+)`, "gi");
+  const regex = new RegExp(`(${template})|([\\W\\S]+)`, "gi");
   const matches = message.match(regex);
   return matches[1] ? matches[1].trim() : undefined;
 }

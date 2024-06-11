@@ -38,12 +38,16 @@ function matchAction(action, message) {
 function runAction({ action, payload }) {
   switch (action) {
     case DEPOSIT_ACTION.REQUEST: {
-      return runRequestAction(payload);
+      const response = runRequestAction(payload);
+      Conversation.next(DEPOSIT_ACTION.REQUEST);
+      return response;
     }
     case DEPOSIT_ACTION.ACCEPT: {
+      Conversation.next(DEPOSIT_ACTION.ACCEPT);
       return ACCEPT_RESPONSE;
     }
     case DEPOSIT_ACTION.DISAGREE: {
+      Conversation.next(DEPOSIT_ACTION.DISAGREE);
       return DISAGREE_RESPONSE;
     }
     default: {

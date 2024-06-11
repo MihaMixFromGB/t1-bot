@@ -7,7 +7,10 @@ function getDeposits() {
 
 function getDeposit(name) {
   const deposits = getDeposits();
-  return deposits.find((d) => d.productName === name);
+  const nameToLowerCase = name.toLocaleLowerCase();
+  return deposits.find(
+    (d) => d.productName.toLocaleLowerCase() === nameToLowerCase
+  );
 }
 
 export default {

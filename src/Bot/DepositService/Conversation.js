@@ -22,7 +22,6 @@ function getActions() {
 
 function next(action) {
   const selectedAction = step.find((s) => s.action === action);
-
   if (!selectedAction) {
     return getActions();
   }
@@ -31,8 +30,8 @@ function next(action) {
     return next(action);
   }
 
-  step = step.next;
+  step = selectedAction.next;
   return getActions();
 }
 
-export { next };
+export default { next };
