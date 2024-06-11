@@ -81,7 +81,6 @@ async function runRequestAction(productName) {
 }
 
 async function request(message, options) {
-  console.log("!!! options", options);
   requestOptions = options;
   const action = getAction(message);
   return await runAction(action);

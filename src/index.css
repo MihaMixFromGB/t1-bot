@@ -28,6 +28,7 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background: url("/bg-pattern.png");
 }
 
 h1 {
@@ -52,6 +53,10 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+
+input {
+  font-size: 1em;
 }
 
 @media (prefers-color-scheme: light) {

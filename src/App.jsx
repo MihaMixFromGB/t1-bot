@@ -1,35 +1,79 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-
+import { useEffect, useRef, useState } from "react";
+import bot from "./Bot";
+import "./App.css";
+// Открыть вклад Управляемый
 function App() {
-  const [count, setCount] = useState(0)
+  const [text, setText] = useState("");
+  const [messages, setMessages] = useState([]);
+  const [errorRequest, setErrorRequest] = useState(false);
+
+  const messagesEndRef = useRef(null);
+
+  const onSend = async (e) => {
+    e.preventDefault();
+    setMessages((m) => [...m, { type: "client", text }]);
+    setText("");
+
+    const response = await bot.request(text, { error: errorRequest });
+    setMessages((m) => [...m, { type: "bot", text: response }]);
+  };
+
+  useEffect(() => {
+    if (!messagesEndRef.current) return;
+    messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="container">
+      <div className="toolbar">
+        <input
+          id="errorRequest"
+          type="checkbox"
+          value={errorRequest}
+          onChange={() => setErrorRequest(!errorRequest)}
+        />
+        <label htmlFor="errorRequest">Ошибка при запросе списка вкладов</label>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+      <div className="message-list">
+        {messages.map((message, idx) => (
+          <p
+            key={idx}
+            className={`message ${
+              message.type === "client" ? "message-client" : "message-bot"
+            }`}
+          >
+            {formatMessage(message.text)}
+          </p>
+        ))}
+        <div ref={messagesEndRef} />
+      </div>
+      <form className="footer" onSubmit={onSend}>
+        <input
+          type="text"
+          value={text}
+          placeholder="Ввести запрос"
+          onChange={(e) => setText(e.target.value)}
+        />
+        <button type="submit" disabled={!text}>
+          Отправить
         </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+      </form>
+    </div>
+  );
 }
 
-export default App
+function formatMessage(text) {
+  const lines = text.split("\n");
+  if (lines.length === 1) {
+    return lines[0];
+  }
+
+  return lines.map((line, idx) => (
+    <span key={idx}>
+      <span>{line}</span>
+      {idx + 1 < lines.length && <br />}
+    </span>
+  ));
+}
+
+export default App;
