@@ -4,9 +4,13 @@ import DepositService from "./api/DepositService";
 import {
   ACCEPT_RESPONSE,
   DISAGREE_RESPONSE,
+  UNDEFINED_DEPOSIT_RESPONSE,
   UNDEFINED_RESPONSE,
+  ERROR_REQUEST_RESPONSE,
 } from "./templates";
 import { DEPOSIT_ACTION } from "./types";
+
+let requestOptions;
 
 function getAction(message) {
   const actions = Conversation.next();
@@ -35,12 +39,16 @@ function matchAction(action, message) {
   }
 }
 
-function runAction({ action, payload }) {
+async function runAction({ action, payload }) {
   switch (action) {
     case DEPOSIT_ACTION.REQUEST: {
-      const response = runRequestAction(payload);
-      Conversation.next(DEPOSIT_ACTION.REQUEST);
-      return response;
+      try {
+        const response = await runRequestAction(payload);
+        Conversation.next(DEPOSIT_ACTION.REQUEST);
+        return response;
+      } catch {
+        return ERROR_REQUEST_RESPONSE;
+      }
     }
     case DEPOSIT_ACTION.ACCEPT: {
       Conversation.next(DEPOSIT_ACTION.ACCEPT);
@@ -56,9 +64,10 @@ function runAction({ action, payload }) {
   }
 }
 
-function runRequestAction(productName) {
-  const deposit = DepositService.getDeposit(productName);
-  if (!deposit) return UNDEFINED_RESPONSE;
+async function runRequestAction(productName) {
+  if (requestOptions?.error) throw Error("A test error for debugging");
+  const deposit = await DepositService.getDeposit(productName);
+  if (!deposit) return UNDEFINED_DEPOSIT_RESPONSE;
 
   let response = [];
   response.push(`Вклад: ${deposit.productName}`);
@@ -71,9 +80,11 @@ function runRequestAction(productName) {
   return response.join("\n");
 }
 
-function request(message) {
+async function request(message, options) {
+  console.log("!!! options", options);
+  requestOptions = options;
   const action = getAction(message);
-  return runAction(action);
+  return await runAction(action);
 }
 
 export default {

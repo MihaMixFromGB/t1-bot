@@ -1,7 +1,7 @@
 import DepositService from "./DepositService";
 
-function request(messsage) {
-  return DepositService.request(messsage);
+function request(messsage, options) {
+  return DepositService.request(messsage, options);
 }
 
 export default {
