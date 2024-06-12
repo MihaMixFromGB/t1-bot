@@ -1,8 +1,13 @@
 import data from "./mock/deposits.json";
 import { translateDeposite } from "./translaters";
 
+/**
+ * Метод имитирует выполение запроса на внешний сервис.
+ * Ответ сервера рекомендуется проверить на код наличия ошибки (отличный от 2хх).
+ * Для этого в случае response.ok === false необходимо выбросить исключение.
+ * Обработка ошибки выполнена в методе runAction({action, payload})
+ */
 const TIMEOUT = 1000;
-
 function getDeposits() {
   return new Promise((resolve) => {
     setTimeout(() => resolve(data.deposits.map(translateDeposite)), TIMEOUT);
