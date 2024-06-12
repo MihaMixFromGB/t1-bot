@@ -43,9 +43,7 @@ async function runAction({ action, payload }) {
   switch (action) {
     case DEPOSIT_ACTION.REQUEST: {
       try {
-        const response = await runRequestAction(payload);
-        Conversation.next(DEPOSIT_ACTION.REQUEST);
-        return response;
+        return await runRequestAction(payload);
       } catch {
         return ERROR_REQUEST_RESPONSE;
       }
@@ -76,6 +74,8 @@ async function runRequestAction(productName) {
   response.push(`Минимальная сумма вклада: ${deposit.nominalRate}`);
   response.push("");
   response.push("Вы согласны открыть вклад?");
+
+  Conversation.next(DEPOSIT_ACTION.REQUEST);
 
   return response.join("\n");
 }
