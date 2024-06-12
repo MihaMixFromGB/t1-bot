@@ -1,5 +1,5 @@
-import data from "./mock/deposits.json";
-import { translateDeposite } from "./translaters";
+import data from "./mock/deposits.json" assert { type: "json" };
+import { translateDeposite } from "./translaters/index.js";
 
 /**
  * Метод имитирует выполение запроса на внешний сервис.

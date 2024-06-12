@@ -1,14 +1,14 @@
-import BotService from "./api/BotService";
-import Conversation from "./Conversation";
-import DepositService from "./api/DepositService";
+import BotService from "./api/BotService.js";
+import Conversation from "./Conversation.js";
+import DepositService from "./api/DepositService.js";
 import {
   ACCEPT_RESPONSE,
   DISAGREE_RESPONSE,
   UNDEFINED_DEPOSIT_RESPONSE,
   UNDEFINED_RESPONSE,
   ERROR_REQUEST_RESPONSE,
-} from "./templates";
-import { DEPOSIT_ACTION } from "./types";
+} from "./templates/index.js";
+import { DEPOSIT_ACTION } from "./types/index.js";
 
 let requestOptions;
 

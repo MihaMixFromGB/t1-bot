@@ -1,5 +1,9 @@
-import { test, getDepositFromMessage } from "./utils";
-import { OPEN_REQUEST, ACCEPT_REQUEST, DISAGREE_REQUEST } from "../templates";
+import { test, getDepositFromMessage } from "./utils/index.js";
+import {
+  OPEN_REQUEST,
+  ACCEPT_REQUEST,
+  DISAGREE_REQUEST,
+} from "../templates/index.js";
 
 function openRequest(message) {
   if (OPEN_REQUEST.some((template) => test({ template, message }))) {

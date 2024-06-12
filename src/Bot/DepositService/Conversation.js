@@ -1,4 +1,4 @@
-import { DEPOSIT_ACTION } from "./types";
+import { DEPOSIT_ACTION } from "./types/index.js";
 
 const script = [
   {

@@ -1,4 +1,4 @@
-import DepositService from "./DepositService";
+import DepositService from "./DepositService/index.js";
 
 function request(messsage, options) {
   return DepositService.request(messsage, options);
