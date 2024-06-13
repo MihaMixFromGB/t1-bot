@@ -57,6 +57,11 @@ button:focus-visible {
 
 input {
   font-size: 1em;
+  padding: 0 8px;
+}
+
+p {
+  margin: 0;
 }
 
 @media (prefers-color-scheme: light) {

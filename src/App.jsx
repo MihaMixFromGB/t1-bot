@@ -34,19 +34,30 @@ function App() {
         />
         <label htmlFor="errorRequest">Ошибка при запросе списка вкладов</label>
       </div>
-      <div className="message-list">
+      <ul className="message-list">
         {messages.map((message, idx) => (
-          <p
+          <li
             key={idx}
-            className={`message ${
-              message.type === "client" ? "message-client" : "message-bot"
+            className={`${
+              message.type === "client"
+                ? "message__container_client"
+                : "message__container_bot"
             }`}
           >
-            {formatMessage(message.text)}
-          </p>
+            <p
+              className={`message ${
+                message.type === "client" ? "message_client" : "message_bot"
+              }`}
+            >
+              {formatMessage(message.text)}
+            </p>
+            <p className="message__sign">
+              {message.type === "client" ? "Вы" : "Бот"}
+            </p>
+          </li>
         ))}
         <div ref={messagesEndRef} />
-      </div>
+      </ul>
       <form className="footer" onSubmit={onSend}>
         <input
           type="text"

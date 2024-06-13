@@ -29,26 +29,42 @@
   flex: 1;
   flex-direction: column;
   overflow-y: auto;
+  gap: 16px;
   padding: 10px;
 }
-.message-list .message:first-child {
+.message-list > li {
+  list-style-type: none;
+}
+.message-list > li:first-child {
   margin-top: auto;
 }
 
+.message__container_bot {
+  align-self: flex-start;
+}
+.message__container_client {
+  align-self: flex-end;
+}
 .message {
   max-width: 300px;
   min-width: 36px;
-  padding: 8px;
+  padding: 16px;
 }
-.message-client {
-  align-self: flex-end;
+.message_bot {
+  background-color: cornsilk;
+  border-radius: 8px 8px 0 8px;
+}
+.message_client {
   background-color: aliceblue;
   border-radius: 8px 8px 8px 0;
 }
-.message-bot {
-  align-self: flex-start;
-  background-color: cornsilk;
-  border-radius: 8px 8px 0 8px;
+
+.message__sign {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  font-size: 0.9rem;
+  color: slategrey;
 }
 
 .footer {

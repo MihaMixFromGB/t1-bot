@@ -1,3 +1,4 @@
+import process from "node:process";
 import * as readline from "node:readline";
 import bot from "./index.js";
 
@@ -11,9 +12,9 @@ var rl = readline.createInterface({
 });
 
 var recursiveAsyncReadLine = function () {
-  rl.question("> ", async function (request) {
+  rl.question("Вы: ", async function (request) {
     if (request == "выйти") return rl.close();
-    log(">", await bot.request(request));
+    log("Бот:", await bot.request(request));
     recursiveAsyncReadLine();
   });
 };
